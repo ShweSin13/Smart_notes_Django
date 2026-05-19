@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Notes</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        /* ===== TITLE (CENTER) ===== */
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+            margin-bottom: 10px;
+        }
+
+        /* ===== SECOND ROW (CREATE LEFT + SEARCH RIGHT) ===== */
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        /* CREATE BUTTON */
+        .create-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 8px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .create-btn:hover {
+            background: #0ea5e9;
+        }
+
+        /* SEARCH */
+        .search-form {
+            display: flex;
+            align-items: center;
+            background: #1e293b;
+            padding: 6px;
+            border-radius: 10px;
+        }
+
+        .search-form input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            width: 160px;
+            padding: 5px;
+        }
+
+        .search-form button {
+            background: #38bdf8;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background: #0ea5e9;
+        }
+
+        /* ===== NOTE CARD ===== */
+        .note {
+            background: #1e293b;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .note:hover {
+            transform: translateY(-5px);
+        }
+
+        .note h2 {
+            margin: 0;
+        }
+
+        .note h2 a {
+            color: #f8fafc;
+            text-decoration: none;
+        }
+
+        .note p {
+            color: #cbd5e1;
+            margin-top: 10px;
+        }
+
+        /* ===== TAGS ===== */
+        .tag {
+            display: inline-block;
+            background: #334155;
+            padding: 5px 10px;
+            border-radius: 8px;
+            margin: 3px;
+            font-size: 12px;
+            color: #38bdf8;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .edit-btn:hover {
+            background: #0ea5e9;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            margin-top: 50px;
+            color: #94a3b8;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- TITLE (CENTER) -->
+    <h1>🧠 Smart Notes</h1>
+
+    <!-- SECOND ROW -->
+    <div class="top-row">
+
+        <!-- CREATE BUTTON (LEFT) -->
+        <a href="{% url 'create_note' %}" class="create-btn">
+            ➕ Create Note
+        </a>
+
+        <!-- SEARCH (RIGHT) -->
+        <form method="GET" class="search-form">
+            <input type="text" name="q" placeholder="Search notes..."
+                   value="{{ query }}">
+            <button type="submit">🔍</button>
+        </form>
+
+    </div>
+
+    <!-- NOTES -->
+    {% if notes %}
+
+        {% for note in notes %}
+            <div class="note">
+
+                <h2>
+                    <a href="{% url 'note_detail' note.id %}">
+                        {{ note.title }}
+                    </a>
+                </h2>
+
+                <p>
+                    {{ note.content|truncatewords:20 }}
+                </p>
+
+                <div>
+                    {% for tag in note.get_tags %}
+                        <span class="tag">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="actions">
+
+                    <a href="{% url 'edit_note' note.id %}" class="btn edit-btn">
+                        ✏️ Edit
+                    </a>
+
+                    <a href="{% url 'delete_note' note.id %}" class="btn delete-btn"
+                       onclick="return confirm('Are you sure you want to delete this note?');">
+                        🗑 Delete
+                    </a>
+
+                </div>
+
+            </div>
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            ❌ No notes found for "<b>{{ query }}</b>"
+            <br><br>
+            Try another keyword.
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

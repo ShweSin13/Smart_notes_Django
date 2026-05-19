@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Note</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: #0f172a;
+            color: white;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 220px;
+            resize: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #0f172a;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #0ea5e9;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: #0ea5e9;
+        }
+
+        label {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- BACK -->
+    <a href="/" class="back">← Back</a>
+
+    <div class="card">
+
+        <h1>➕ Create Note</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Title</label>
+            <input type="text" name="title" placeholder="Enter note title">
+
+            <label>Content</label>
+            <textarea name="content" placeholder="Write your note here..."></textarea>
+
+            <button type="submit" class="btn">Save Note</button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

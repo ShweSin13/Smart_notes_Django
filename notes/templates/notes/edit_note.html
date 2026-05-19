@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Note</title>
+
+    <style>
+        body {
+            background:#0f172a;
+            font-family:Arial;
+            color:white;
+            padding:40px;
+        }
+
+        .container {
+            max-width:700px;
+            margin:auto;
+        }
+
+        .card {
+            background:#1e293b;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            color:#38bdf8;
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        input, textarea {
+            width:100%;
+            padding:12px;
+            margin-top:10px;
+            margin-bottom:15px;
+            border-radius:8px;
+            border:none;
+            outline:none;
+            background:#0f172a;
+            color:white;
+        }
+
+        textarea {
+            height:220px;
+            resize:none;
+        }
+
+        .btn {
+            width:100%;
+            padding:12px;
+            background:#38bdf8;
+            border:none;
+            border-radius:10px;
+            font-weight:bold;
+            cursor:pointer;
+            color:#0f172a;
+        }
+
+        .btn:hover {
+            background:#0ea5e9;
+        }
+
+        .back {
+            display:inline-block;
+            margin-bottom:15px;
+            color:#38bdf8;
+            text-decoration:none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="/" class="back">← Back</a>
+
+    <div class="card">
+
+        <h1>✏️ Edit Note</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Title</label>
+            <input type="text" name="title" value="{{ note.title }}">
+
+            <label>Content</label>
+            <textarea name="content">{{ note.content }}</textarea>
+
+            <button type="submit" class="btn">Update Note</button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
