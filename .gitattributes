@@ -1,0 +1,2 @@
+# Tell GitHub to ignore HTML files when calculating language percentages
+*.html linguist-detectable=false
